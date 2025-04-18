@@ -15,9 +15,10 @@ func TextDocumentCompletion(context *glsp.Context, params *protocol.CompletionPa
 		term := entry.Term
 		description := entry.Description
 		completionItems = append(completionItems, protocol.CompletionItem{
-			Label:      word,
-			Detail:     &description,
-			InsertText: &term,
+			Label:         word,
+			Detail:        &description,
+			Documentation: &description,
+			InsertText:    &term,
 		})
 	}
 	for label, snippet := range mappers.CodeSnippets {
