@@ -12,12 +12,28 @@ func TextDocumentCompletion(context *glsp.Context, params *protocol.CompletionPa
 	var completionItems []protocol.CompletionItem
 
 	for word, entry := range mappers.C100Mapper {
-		termCopy := entry
+		term := entry.Term
+		description := entry.Description
 		completionItems = append(completionItems, protocol.CompletionItem{
 			Label:      word,
-			Detail:     &termCopy,
-			InsertText: &termCopy,
+			Detail:     &description,
+			InsertText: &term,
 		})
 	}
+	for label, snippet := range mappers.CodeSnippets {
+		insertText := snippet.Body
+		detail := snippet.Description
+		kind := protocol.CompletionItemKindSnippet
+		textFormat := protocol.InsertTextFormatSnippet
+
+		completionItems = append(completionItems, protocol.CompletionItem{
+			Label:            label,
+			Detail:           &detail,
+			InsertText:       &insertText,
+			Kind:             &kind,
+			InsertTextFormat: &textFormat,
+		})
+	}
+
 	return completionItems, nil
 }
