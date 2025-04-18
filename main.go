@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/SimonKausch/indexC100-lsp/handlers"
 	"github.com/tliron/commonlog"
 	"github.com/tliron/glsp"
 	protocol "github.com/tliron/glsp/protocol_3_16"
@@ -18,23 +19,23 @@ var (
 
 func main() {
 	commonlog.Configure(2, nil)
+
 	handler = protocol.Handler{
 		Initialize:             initialize,
 		Shutdown:               shutdown,
-		TextDocumentCompletion: handler.TextDocumentCompletion,
+		TextDocumentCompletion: handlers.TextDocumentCompletion,
 	}
+
 	server := server.NewServer(&handler, lsName, true)
 	server.RunStdio()
 }
 
 func initialize(context *glsp.Context, params *protocol.InitializeParams) (any, error) {
 	commonlog.NewInfoMessage(0, "Initializing Index C100 LSP")
+
 	capabilities := handler.CreateServerCapabilities()
 
-	trueVar := true
-	capabilities.CompletionProvider = &protocol.CompletionOptions{
-		ResolveProvider: &trueVar,
-	}
+	capabilities.CompletionProvider = &protocol.CompletionOptions{}
 
 	return protocol.InitializeResult{
 		Capabilities: capabilities,
