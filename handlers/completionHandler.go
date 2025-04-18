@@ -14,10 +14,11 @@ func TextDocumentCompletion(context *glsp.Context, params *protocol.CompletionPa
 	for word, entry := range mappers.C100Mapper {
 		term := entry.Term
 		description := entry.Description
+		documentation := entry.Documentation
 		completionItems = append(completionItems, protocol.CompletionItem{
 			Label:         word,
 			Detail:        &description,
-			Documentation: &description,
+			Documentation: &documentation,
 			InsertText:    &term,
 		})
 	}
