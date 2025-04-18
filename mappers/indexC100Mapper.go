@@ -8,10 +8,14 @@ type C100Entry struct {
 	Documentation protocol.MarkupContent
 }
 
+func createMarkup(markdown string) protocol.MarkupContent {
+	return protocol.MarkupContent{Kind: protocol.MarkupKindMarkdown, Value: markdown}
+}
+
 var C100Mapper = map[string]C100Entry{
-	// "Drehzahllimit":        {"G92=", "#1 Drehzahl begrenzen"},
-	// "Werkzeugwechselpunkt": {"GXZ73", "Revolver in X und Z-Achse auf Wechselposition"},
-	// "G40":                  {"G40", "Radiuskorrektur abwaehlen"},
-	// "G41":                  {"G41", "Radiuskorrektur links"},
-	"G42": {"G42", "Radiuskorrektur rechts", protocol.MarkupContent{Kind: protocol.MarkupKindMarkdown, Value: "# some heading"}},
+	"Drehzahllimit":        {"G92=", "#1 Drehzahl begrenzen", createMarkup("")},
+	"Werkzeugwechselpunkt": {"GXZ73", "Revolver in X und Z-Achse auf Wechselposition", createMarkup("")},
+	"G40":                  {"G40", "Radiuskorrektur abwaehlen", createMarkup("")},
+	"G41":                  {"G41", "Radiuskorrektur links", createMarkup("")},
+	"G42":                  {"G42", "Radiuskorrektur rechts", createMarkup("# Radiuskorrektur\nText")},
 }
